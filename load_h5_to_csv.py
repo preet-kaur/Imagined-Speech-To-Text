@@ -13,6 +13,7 @@ import h5py
 import re 
 import numpy
 import pandas as pd
+import csv
 
 train_rest = []
 train_vowel_a = []
@@ -41,6 +42,10 @@ def create_csv(name, new_filename):
         with open(csv_file_path+'/'+new_filename+'.csv','a') as f_handle:
             numpy.savetxt(f_handle, data, delimiter=",")
             
+def interchange_rows_col(old_filename, new_filename):
+    a = zip(*csv.reader(open(csv_file_path+'/'+old_filename+'.csv', 'rt')))
+    csv.writer(open(csv_file_path+'/'+new_filename+'.csv', 'wt')).writerows(a)
+
 
 
             
@@ -86,4 +91,11 @@ create_csv(test_rest, "test_rest")
 create_csv(test_vowel_a, "test_vowel_a")
 create_csv(test_vowel_u, "test_vowel_u")
 
-#Adding labels to csv files
+
+# interchanging rows and columns in csv files
+interchange_rows_col("train_rest", "train_rest_new")
+interchange_rows_col("train_vowel_a", "train_vowel_a_new")
+interchange_rows_col("train_vowel_u", "train_vowel_u_new")
+interchange_rows_col("test_rest", "test_rest_new")
+interchange_rows_col("test_vowel_a", "test_vowel_a_new")
+interchange_rows_col("test_vowel_u", "test_vowel_u_new")
